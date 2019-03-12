@@ -6,22 +6,41 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.CalendarView;
 
+import com.squareup.timessquare.CalendarPickerView;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import static com.squareup.timessquare.CalendarPickerView.SelectionMode.RANGE;
+
 public class Calender extends AppCompatActivity {
 
-    CalendarView cal_cal;
+    CalendarPickerView calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calender);
 
-        cal_cal = (CalendarView) findViewById( R.id.cal_calendar);
+        Calendar nextYear = Calendar.getInstance();
+        nextYear.add(Calendar.YEAR, 1);
 
-        cal_cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        calendar = (CalendarPickerView) findViewById(R.id.cal_calendar);
+        Date today = new Date();
+        calendar.init(today, nextYear.getTime())
+                .withSelectedDate(today)
+                .inMode(RANGE);;
+
+
+        calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
-                String date = year+"/"+month+"/"+day;
-                Log.d("Calendar", "Date changed: " + date);
+            public void onDateSelected(Date date) {
+
+            }
+
+            @Override
+            public void onDateUnselected(Date date) {
+
             }
         });
     }
