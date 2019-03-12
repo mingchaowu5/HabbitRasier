@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
 public class Achievement extends AppCompatActivity {
     private RadioGroup RgGroup;
     final ArrayList<Habit> achList = new ArrayList<>();
@@ -34,7 +35,7 @@ public class Achievement extends AppCompatActivity {
         RgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch(i){
+                switch (i) {
                     case R.id.calender:
                         Intent Cal = new Intent(Achievement.this, Calender.class);
                         startActivity(Cal);
@@ -58,16 +59,16 @@ public class Achievement extends AppCompatActivity {
     private void populateListView() {
         achList.clear();
         Cursor data = db.getData();
-        if(data == null){
+        if (data == null) {
             Toast.makeText(Achievement.this, "NOTHING HERE", Toast.LENGTH_SHORT).show();
         }
-        while(data.moveToNext()){
+        while (data.moveToNext()) {
             //Get the value from the database and add to Arraylist
             achList.add(new Habit(data.getString(data.getColumnIndex("habitName")), data.getString(data.getColumnIndex("description"))));
         }
 
         achlst = (ListView) findViewById(R.id.achlst);
-        mAdapter = new CustomListView(this,achList);
+        mAdapter = new CustomListView(this, achList);
         achlst.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 

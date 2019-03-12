@@ -35,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ColHabitName + " TEXT, " + ColStartDate + " TEXT, "+ ColEndDate + " TEXT, "+ ColFrequency + " TEXT, "+ ColDuration +" TEXT, "+ ColNotification +" TEXT, "+ ColDescription +" TEXT)";
+                ColHabitName + " TEXT, " + ColStartDate + " TEXT, " + ColEndDate + " TEXT, " + ColFrequency + " TEXT, " + ColDuration + " TEXT, " + ColNotification + " TEXT, " + ColDescription + " TEXT)";
         sqLiteDatabase.execSQL(createTable);
     }
 
@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS '" + TABLE_NAME + "'");
     }
 
-    public boolean addData(String item1, String item2, String item3, String item4, String item5, String item6, String item7){
+    public boolean addData(String item1, String item2, String item3, String item4, String item5, String item6, String item7) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(ColHabitName, item1);
@@ -60,7 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert(TABLE_NAME, null, contentValues);
 
         //If data is inserted incorrectly, it will return
-        if (result == -1){
+        if (result == -1) {
             return false;
         } else {
             return true;
@@ -68,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Cursor to return database data
-    public Cursor getData(){
+    public Cursor getData() {
         Log.d(TAG, "getData: got into function.");
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -80,7 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //Cursor to get item id
-    public Cursor getItemID(String name){
+    public Cursor getItemID(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + ColHabitID + " FROM " + TABLE_NAME +
                 " WHERE " + ColHabitName + " = '" + name + "'";
@@ -89,7 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Update name of item
-    public void updateName(String newName, int id, String oldName){
+    public void updateName(String newName, int id, String oldName) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE '" + TABLE_NAME + "' WHERE " + ColHabitID +
                 " = '" + id + "' " + " AND " + ColHabitName + " = '" +
@@ -98,7 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Delete food
-    public void deleteHabit(int id, String name){
+    public void deleteHabit(int id, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + TABLE_NAME + " WHERE "
                 + ColHabitID + " = '" + id + "' AND " + ColHabitName +

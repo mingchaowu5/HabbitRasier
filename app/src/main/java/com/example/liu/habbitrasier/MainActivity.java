@@ -33,18 +33,19 @@ public class MainActivity extends AppCompatActivity {
         RgGroup = (RadioGroup) findViewById(R.id.rg_group);
         plus = (ImageButton) findViewById(R.id.imageButton2);
         db = new DatabaseHelper(MainActivity.this);
+        //TODO
+        //initial fake data
+        //db.addData("Study HCI","","","","",""," Read Critiques");
         populateListView();
-
         //Long click listener for ListView - Delete
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final int position = i;
                 AlertDialog.Builder builder;
-                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     builder = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Dialog_Alert);
-                }
-                else{
+                } else {
                     builder = new AlertDialog.Builder(MainActivity.this);
                 }
                 builder.setTitle("Never Give Up")
@@ -52,14 +53,14 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton("Sorry but delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                String name= habitList.get(position).getHabitName();
+                                String name = habitList.get(position).getHabitName();
                                 Cursor data = db.getItemID(name);
 
                                 int itemID = -1;
-                                while (data.moveToNext()){
+                                while (data.moveToNext()) {
                                     itemID = data.getInt(0);
                                 }
-                                if (itemID>-1){
+                                if (itemID > -1) {
                                     db.deleteHabit(itemID, name);
                                     populateListView();
                                 }
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         RgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch(i){
+                switch (i) {
                     case R.id.calender:
                         Intent Cal = new Intent(MainActivity.this, Calender.class);
                         startActivity(Cal);
@@ -113,16 +114,16 @@ public class MainActivity extends AppCompatActivity {
     private void populateListView() {
         habitList.clear();
         Cursor data = db.getData();
-        if(data == null){
+        if (data == null) {
             Toast.makeText(MainActivity.this, "NOTHING HERE", Toast.LENGTH_SHORT).show();
         }
-        while(data.moveToNext()){
+        while (data.moveToNext()) {
             //Get the value from the database and add to Arraylist
             habitList.add(new Habit(data.getString(data.getColumnIndex("habitName")), data.getString(data.getColumnIndex("description"))));
         }
 
         lst = (ListView) findViewById(R.id.lst);
-        mAdapter = new CustomListView(this,habitList);
+        mAdapter = new CustomListView(this, habitList);
         lst.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 

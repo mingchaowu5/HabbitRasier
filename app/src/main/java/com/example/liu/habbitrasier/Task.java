@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.ImageButton;
@@ -21,7 +22,7 @@ public class Task extends AppCompatActivity {
     private Button save, cancel;
     private RadioGroup RgGroup;
     DatabaseHelper db;
-    private Habit habit;
+//    private Habit habit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class Task extends AppCompatActivity {
         RgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch(i){
+                switch (i) {
                     case R.id.calender:
                         Intent Cal = new Intent(Task.this, Calender.class);
                         startActivity(Cal);
@@ -66,13 +67,22 @@ public class Task extends AppCompatActivity {
             public void onClick(View view) {
 
                 //TODO
-                // add/update data here
+                //add/update data here
+                String name = ((EditText) findViewById(R.id.editTaskName)).getText().toString();
+                String startDate = findViewById(R.id.editStartDate).toString();
+                String endDate = findViewById(R.id.editEndDate).toString();
+                String repeat = findViewById(R.id.editRepeat).toString();
+                String duration = findViewById(R.id.editDuration).toString();
+                String notification = findViewById(R.id.toggleButtonNotification).toString();
+                String description = ((EditText) findViewById(R.id.editDescription)).getText().toString();
+                System.out.println("-----------------------------" + name + description);
+                db.addData(name, startDate, endDate, repeat, duration, notification, "");
 
                 Intent Task = new Intent(Task.this, MainActivity.class);
                 startActivity(Task);
             }
         });
-        cancel.setOnClickListener( new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent Task = new Intent(Task.this, MainActivity.class);
