@@ -13,6 +13,7 @@ import com.squareup.timessquare.CalendarPickerView;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -82,12 +83,14 @@ public class Calender extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
 
         // For each task, display the dates on calendar.
-        ArrayList<Date> datesSelected = new ArrayList<>();
+        ArrayList<Date> datesColor1 = new ArrayList<>();
+        ArrayList<Date> datesColor2 = new ArrayList<>();
+        boolean goToColor1 = true;
         for(Habit h : taskList){
             boolean startDateOk =(h.getStartDate() != null) &&
                     !(h.getStartDate().after(mMaxDate) || h.getStartDate().before(mMinDate));
             if(startDateOk){
-                    datesSelected .add(h.getStartDate());
+                    addIntoColorList(h.getStartDate(), goToColor1, datesColor1, datesColor2);
             }
             if(h.getEndDate()!=null){
                 if(h.getEndDate().after(mMaxDate) || h.getEndDate().before(mMinDate));
@@ -96,20 +99,34 @@ public class Calender extends AppCompatActivity {
                     {
                         // Add everyday between.
                       ArrayList<Date> dates= getDatesBetween(h.getStartDate(), h.getEndDate());
-                        datesSelected.addAll(dates);
+                        addAllIntoColorList(dates, goToColor1, datesColor1, datesColor2);
                     }
                     else
-                        datesSelected .add(h.getEndDate());
+                        addIntoColorList(h.getEndDate(), goToColor1, datesColor1, datesColor2);
                 }
             }
+
+            // switch color.
+            goToColor1 = !goToColor1;
         }
 
         // Finally, display the calendar.
         calendar.init(mMinDate, mMaxDate)
                 .inMode(MULTIPLE)
-                .withSelectedDates(datesSelected)
+                .withSelectedDates(datesColor1)
+                .withHighlightedDates(datesColor2)
                 .displayOnly()
                 ;
+    }
+
+    void addIntoColorList(Date value, boolean goToColor1, ArrayList<Date> datesColor1, ArrayList<Date> datesColor2){
+        if(goToColor1)datesColor1.add(value);
+        else    datesColor2.add(value);
+    }
+
+    void addAllIntoColorList(Collection<Date> value, boolean goToColor1, ArrayList<Date> datesColor1, ArrayList<Date> datesColor2){
+        if(goToColor1)datesColor1.addAll(value);
+        else    datesColor2.addAll(value);
     }
 
     public void populateTaskList(){
