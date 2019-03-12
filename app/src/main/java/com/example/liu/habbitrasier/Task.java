@@ -14,7 +14,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -69,11 +72,11 @@ public class Task extends AppCompatActivity {
                 //TODO
                 //add/update data here
                 String name = ((EditText) findViewById(R.id.editTaskName)).getText().toString();
-                String startDate = findViewById(R.id.editStartDate).toString();
-                String endDate = findViewById(R.id.editEndDate).toString();
-                String repeat = findViewById(R.id.editRepeat).toString();
-                String duration = findViewById(R.id.editDuration).toString();
-                String notification = findViewById(R.id.toggleButtonNotification).toString();
+                String startDate = ((EditText) findViewById(R.id.editStartDate)).getText().toString();
+                String endDate =((EditText) findViewById(R.id.editEndDate)).getText().toString();
+                String repeat = ((EditText) findViewById(R.id.editRepeat)).getText().toString();
+                String duration =((EditText) findViewById(R.id.editDuration)).getText().toString();
+                String notification =((TextView) findViewById(R.id.textNotification)).getText().toString();
                 String description = ((EditText) findViewById(R.id.editDescription)).getText().toString();
                 System.out.println("-----------------------------" + name + description);
                 db.addData(name, startDate, endDate, repeat, duration, notification, "");

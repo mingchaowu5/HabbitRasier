@@ -19,14 +19,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "habit_table";
 
     //Table Details
-    private static final String ColHabitID = "ID";
-    private static final String ColHabitName = "habitName";
-    private static final String ColStartDate = "startDate";
-    private static final String ColEndDate = "endDate";
-    private static final String ColFrequency = "frequency";
-    private static final String ColDuration = "duration";
-    private static final String ColNotification = "notification";
-    private static final String ColDescription = "description";
+    public static final String ColHabitID = "ID";
+    public static final String ColHabitName = "habitName";
+    public static final String ColStartDate = "startDate";
+    public static final String ColEndDate = "endDate";
+    public static final String ColFrequency = "frequency";
+    public static final String ColDuration = "duration";
+    public static final String ColNotification = "notification";
+    public static final String ColDescription = "description";
 
     public DatabaseHelper(Context context) {
         super(context, TABLE_NAME, null, 1);
