@@ -1,4 +1,4 @@
-# HabbitRaiser
+# HabitRaiser
 This app is designed to help the user to raise a new habit by setting up tasks and reminding themselves to do the tasks. The scope for this app includes setting up the tasks, “Check the calendar” and “Delete your task”. Especially, the reason we test the last functionality “delete your task” is to test if our persuading system will work, which will try to persuade the user not to give up a task easily. 
 
 # Starup Instruction 
