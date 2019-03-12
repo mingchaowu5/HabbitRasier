@@ -1,10 +1,7 @@
 package com.example.liu.habbitrasier;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.CalendarView;
+import android.support.v7.app.AppCompatActivity;
 
 import com.squareup.timessquare.CalendarPickerView;
 

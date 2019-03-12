@@ -1,17 +1,11 @@
 package com.example.liu.habbitrasier;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,7 +24,7 @@ public class Achievement extends AppCompatActivity {
 
         RgGroup = (RadioGroup) findViewById(R.id.rg_group);
         db = new DatabaseHelper(Achievement.this);
-        populateListView();
+//        populateListView();
 
         RgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
