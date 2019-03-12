@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.liu.habbitrasier.Calender">
 
+    <com.squareup.timessquare.CalendarPickerView
+        android:id="@+id/cal_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="335dp"
+        android:layout_marginBottom="112dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
