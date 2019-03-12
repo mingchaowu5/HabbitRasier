@@ -26,7 +26,7 @@ public class CustomListView extends ArrayAdapter<Habit> {
     private List<Habit> habitsList = new ArrayList<>();
 
     public CustomListView(@NonNull Context context, @SuppressLint("SupportAnnotationUsage") @LayoutRes ArrayList<Habit> list) {
-        super(context, 0 , list);
+        super(context, 0, list);
         mContext = context;
         habitsList = list;
     }
@@ -36,8 +36,8 @@ public class CustomListView extends ArrayAdapter<Habit> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         View listItem = convertView;
-        if(listItem == null)
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.listview_layout,parent,false);
+        if (listItem == null)
+            listItem = LayoutInflater.from(mContext).inflate(R.layout.listview_layout, parent, false);
 
         Habit currentHabit = habitsList.get(position);
 

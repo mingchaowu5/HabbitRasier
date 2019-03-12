@@ -22,9 +22,8 @@ public class Habit {
     }
 
 
-    public Habit(String name, String des, Date startDate, Date endDate, String freq, String duration, Boolean notif, String desc) {
+    public Habit(String name, Date startDate, Date endDate, String freq, String duration, Boolean notif, String desc) {
         this.HabitName = name;
-        this.Description = des;
         this.StartDate = startDate;
         this.EndDate = endDate;
         this.Frequency = freq;

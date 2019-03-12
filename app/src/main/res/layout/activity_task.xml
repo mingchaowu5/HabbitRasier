@@ -339,7 +339,7 @@
                     tools:layout_editor_absoluteY="75dp" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/editDescription"
                     android:layout_width="191dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
