@@ -165,7 +165,7 @@
                     tools:layout_editor_absoluteX="253dp"
                     tools:layout_editor_absoluteY="75dp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/editStartDate"
                     android:layout_width="191dp"
                     android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
                     tools:layout_editor_absoluteX="253dp"
                     tools:layout_editor_absoluteY="75dp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/editEndDate"
                     android:layout_width="191dp"
                     android:layout_height="wrap_content"
