@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -81,6 +83,17 @@ public class Calender extends AppCompatActivity {
         mAdapter = new CustomListView(this, taskList);
         taskListView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+
+        //Long click listener for ListView - Delete
+        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String name = taskList.get(i).getHabitName();
+                Intent Det = new Intent(Calender.this, HabitDetail.class);
+                Det.putExtra("name", name);
+                startActivity(Det);
+            }
+        });
 
         // For each task, display the dates on calendar.
         ArrayList<Date> datesColor1 = new ArrayList<>();

@@ -17,10 +17,8 @@ public class HabitDetail extends AppCompatActivity {
     private Button delete;
     private Button edit;
     DatabaseHelper db;
-    private String name;
+    String name;
     private TextView infor;
-    private int back = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,25 +92,18 @@ public class HabitDetail extends AppCompatActivity {
                                 if (itemID > -1) {
                                     db.deleteHabit(itemID, name);
                                 }
-                                back = 1;
-
+                                Intent Home = new Intent(HabitDetail.this, MainActivity.class);
+                                startActivity(Home);
                             }
                         })
                         .setNegativeButton("I'll try more", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //do nothing
-                                back = 0;
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
-
-                if (back == 1){
-                    Intent Home = new Intent(HabitDetail.this, MainActivity.class);
-                    startActivity(Home);
-                }
-                else {}
             }
         });
     }

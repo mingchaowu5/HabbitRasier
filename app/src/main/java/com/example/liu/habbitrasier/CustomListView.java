@@ -44,8 +44,8 @@ public class CustomListView extends ArrayAdapter<Habit> {
         TextView name = (TextView) listItem.findViewById(R.id.tvHabitName);
         name.setText(currentHabit.getHabitName());
 
-        TextView foodExpDate = (TextView) listItem.findViewById(R.id.tvDescription);
-        foodExpDate.setText(currentHabit.getDescription());
+        TextView des = (TextView) listItem.findViewById(R.id.tvDescription);
+        des.setText(currentHabit.getDescription());
 
         return listItem;
     }

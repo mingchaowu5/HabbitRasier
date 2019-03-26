@@ -7,7 +7,7 @@ import android.widget.RadioGroup;
 
 public class User extends AppCompatActivity {
     private RadioGroup RgGroup;
-    DatabaseHelper db;
+    UserDataHelper userdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +15,7 @@ public class User extends AppCompatActivity {
         setContentView(R.layout.activity_user);
 
         RgGroup = (RadioGroup) findViewById(R.id.rg_group);
-        db = new DatabaseHelper(User.this);
+        userdb = new UserDataHelper(User.this);
 
         //TODO
         // access user data here
