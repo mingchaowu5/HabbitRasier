@@ -15,6 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/save">
+        >
 
         <RadioButton
             android:id="@+id/home"
@@ -75,8 +76,8 @@
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="490dp"
-        android:layout_marginTop="80dp"
         android:layout_marginBottom="32dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -101,7 +102,7 @@
                     android:id="@+id/taskName"
                     android:layout_width="122dp"
                     android:layout_height="wrap_content"
-                    android:text="Task Name:"
+                    android:text="*Task Name:"
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textSize="18sp"
@@ -126,9 +127,9 @@
 
                 <TextView
                     android:id="@+id/repeat"
-                    android:layout_width="122dp"
+                    android:layout_width="88dp"
                     android:layout_height="wrap_content"
-                    android:text="Repeat:"
+                    android:text="*Repeat:"
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textSize="18sp"
@@ -136,15 +137,86 @@
                     tools:layout_editor_absoluteX="253dp"
                     tools:layout_editor_absoluteY="75dp" />
 
-                <EditText
-                    android:id="@+id/editRepeat"
-                    android:layout_width="191dp"
+                <CheckBox
+                    android:id="@+id/every"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="select from Mon-Sun"
-                    android:inputType="text"
-                    android:textAlignment="center" />
+                    android:text="Every Day" />
+
+                <CheckBox
+                    android:id="@+id/weekD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Weekdays" />
+
+                <CheckBox
+                    android:id="@+id/weekE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Weekends" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/sun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="S" />
+
+                <CheckBox
+                    android:id="@+id/mon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="M" />
+
+                <CheckBox
+                    android:id="@+id/tues"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="T" />
+
+                <CheckBox
+                    android:id="@+id/wed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="W" />
+
+                <CheckBox
+                    android:id="@+id/thur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Th" />
+
+                <CheckBox
+                    android:id="@+id/fri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="F" />
+
+                <CheckBox
+                    android:id="@+id/sat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="S" />
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -157,7 +229,7 @@
                     android:id="@+id/startDate"
                     android:layout_width="122dp"
                     android:layout_height="wrap_content"
-                    android:text="Start Date:"
+                    android:text="*Start Date:"
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textSize="18sp"
@@ -186,7 +258,7 @@
                     android:id="@+id/endDate"
                     android:layout_width="122dp"
                     android:layout_height="wrap_content"
-                    android:text="End Date:"
+                    android:text="*End Date:"
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textSize="18sp"
@@ -215,7 +287,7 @@
                     android:id="@+id/textDuration"
                     android:layout_width="122dp"
                     android:layout_height="wrap_content"
-                    android:text="Duration:"
+                    android:text="*Duration:"
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textSize="18sp"
@@ -225,13 +297,20 @@
 
                 <EditText
                     android:id="@+id/editDuration"
-                    android:layout_width="191dp"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="e.g. 2 hours/day"
                     android:inputType="number"
                     android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="hours/day" />
             </LinearLayout>
 
             <LinearLayout
@@ -270,35 +349,6 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/Memo"
-                    android:layout_width="122dp"
-                    android:layout_height="wrap_content"
-                    android:text="Memo:"
-                    android:textAlignment="center"
-                    android:textAllCaps="false"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    tools:layout_editor_absoluteX="253dp"
-                    tools:layout_editor_absoluteY="75dp" />
-
-                <EditText
-                    android:id="@+id/editMemo"
-                    android:layout_width="191dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Encouraging words "
-                    android:inputType="text"
-                    android:textAlignment="center" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
                     android:id="@+id/Priority"
                     android:layout_width="122dp"
                     android:layout_height="wrap_content"
@@ -310,13 +360,12 @@
                     tools:layout_editor_absoluteX="253dp"
                     tools:layout_editor_absoluteY="75dp" />
 
-                <EditText
-                    android:id="@+id/editPriority"
-                    android:layout_width="192dp"
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="number" />
+                    android:entries="@array/priority"/>
 
             </LinearLayout>
 
@@ -379,5 +428,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2"
         app:layout_constraintVertical_bias="0.275" />
-
 </android.support.constraint.ConstraintLayout>

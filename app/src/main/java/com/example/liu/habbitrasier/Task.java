@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -20,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.CheckBox;
 
 import org.w3c.dom.Text;
 
@@ -34,6 +36,19 @@ public class Task extends AppCompatActivity {
     private TextView editStartDate;
     private TextView editEndDate;
     private DatePickerDialog.OnDateSetListener mOnDateSetListener;
+    private CheckBox everyDay;
+    private CheckBox weekDay;
+    private CheckBox weekEnd;
+    private CheckBox Mon;
+    private CheckBox Tue;
+    private CheckBox Wed;
+    private CheckBox Thur;
+    private CheckBox Fri;
+    private CheckBox Sat;
+    private CheckBox Sun;
+    private String old;
+
+    private String repeated;
 
     private TextView mSelectedForDatePick = null;
 
@@ -46,10 +61,93 @@ public class Task extends AppCompatActivity {
         save = (Button) findViewById(R.id.save);
         cancel = (Button) findViewById(R.id.cancel);
         db = new DatabaseHelper(Task.this);
+        everyDay = (CheckBox) findViewById(R.id.every);
+        weekDay = (CheckBox)findViewById(R.id.weekD);
+        weekEnd = (CheckBox)findViewById(R.id.weekE);
+        Mon = (CheckBox) findViewById(R.id.mon);
+        Tue = (CheckBox) findViewById(R.id.tues);
+        Wed = (CheckBox) findViewById(R.id.wed);
+        Thur = (CheckBox) findViewById(R.id.thur);
+        Fri = (CheckBox) findViewById(R.id.fri);
+        Sat = (CheckBox) findViewById(R.id.sat);
+        Sun = (CheckBox) findViewById(R.id.sun);
+
 
         editStartDate = (TextView)findViewById(R.id.editStartDate);
         editEndDate = (TextView)findViewById(R.id.editEndDate);
 
+        Intent Det = getIntent();
+        old = Det.getStringExtra("name");
+
+        if (old != null){
+            ((EditText) findViewById(R.id.editTaskName)).setText(old);
+        }
+
+        everyDay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    Mon.setChecked(true);
+                    Tue.setChecked(true);
+                    Wed.setChecked(true);
+                    Thur.setChecked(true);
+                    Fri.setChecked(true);
+                    Sat.setChecked(true);
+                    Sun.setChecked(true);
+                    weekDay.setChecked(true);
+                    weekEnd.setChecked(true);
+                    repeated = "Every Day";
+                }
+                else{
+                    Mon.setChecked(false);
+                    Tue.setChecked(false);
+                    Wed.setChecked(false);
+                    Thur.setChecked(false);
+                    Fri.setChecked(false);
+                    Sat.setChecked(false);
+                    Sun.setChecked(false);
+                    weekDay.setChecked(false);
+                    weekEnd.setChecked(false);
+                    repeated = null;
+                }
+            }
+        });
+        weekDay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    Mon.setChecked(true);
+                    Tue.setChecked(true);
+                    Wed.setChecked(true);
+                    Thur.setChecked(true);
+                    Fri.setChecked(true);
+                    repeated = "Weekdays";
+                }
+                else{
+                    Mon.setChecked(false);
+                    Tue.setChecked(false);
+                    Wed.setChecked(false);
+                    Thur.setChecked(false);
+                    Fri.setChecked(false);
+                    repeated = null;
+                }
+            }
+        });
+        weekEnd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    Sat.setChecked(true);
+                    Sun.setChecked(true);
+                    repeated = "Weekends";
+                }
+                else{
+                    Sat.setChecked(false);
+                    Sun.setChecked(false);
+                    repeated = null;
+                }
+            }
+        });
         // bind date picker.
         editStartDate.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -107,18 +205,58 @@ public class Task extends AppCompatActivity {
 
                 //TODO
                 //add/update data here
+                AlertDialog.Builder builder;
                 String name = ((EditText) findViewById(R.id.editTaskName)).getText().toString();
                 String startDate = ((TextView) findViewById(R.id.editStartDate)).getText().toString();
                 String endDate =((TextView) findViewById(R.id.editEndDate)).getText().toString();
-                String repeat = ((EditText) findViewById(R.id.editRepeat)).getText().toString();
+                String repeat = repeated;
                 String duration =((EditText) findViewById(R.id.editDuration)).getText().toString();
                 String notification =((TextView) findViewById(R.id.textNotification)).getText().toString();
                 String description = ((EditText) findViewById(R.id.editDescription)).getText().toString();
+                int dur = Integer.parseInt(duration);
                 System.out.println("-----------------------------" + name + description);
-                db.addData(name, startDate, endDate, repeat, duration, notification, "");
+                if(name == null||startDate == null|| endDate == null||repeated == null|| duration == null ){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        builder = new AlertDialog.Builder(Task.this, android.R.style.Theme_Material_Dialog_Alert);
+                    } else {
+                        builder = new AlertDialog.Builder(Task.this);
+                    }
+                    builder.setTitle("You did not enter enough information")
+                            .setMessage("You cannot create a habit with information missing. You have to fill all the blocks with * ")
+                            .setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //do nothing
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+                else {
+                    if (dur>24){
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            builder = new AlertDialog.Builder(Task.this, android.R.style.Theme_Material_Dialog_Alert);
+                        } else {
+                            builder = new AlertDialog.Builder(Task.this);
+                        }
+                        builder.setTitle("The number of duration is wrong")
+                                .setMessage("You cannot set your duration more than 24.")
+                                .setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //do nothing
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    }
 
-                Intent Task = new Intent(Task.this, MainActivity.class);
-                startActivity(Task);
+                    else {
+                        db.addData(name, startDate, endDate, repeat, duration, notification, "");
+                        Intent Task = new Intent(Task.this, MainActivity.class);
+                        startActivity(Task);
+                    }
+                }
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +266,10 @@ public class Task extends AppCompatActivity {
                 startActivity(Task);
             }
         });
+
     }
+
+
 
     private void ShowDatePicker() {
         Calendar cal = Calendar.getInstance();

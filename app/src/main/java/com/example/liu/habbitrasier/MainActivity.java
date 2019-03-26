@@ -42,39 +42,10 @@ public class MainActivity extends AppCompatActivity {
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final int position = i;
-                AlertDialog.Builder builder;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    builder = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Dialog_Alert);
-                } else {
-                    builder = new AlertDialog.Builder(MainActivity.this);
-                }
-                builder.setTitle("Never Give Up")
-                        .setMessage("You can persevere to do it for a little bit longer! Don't give up so early please!")
-                        .setPositiveButton("Sorry but delete", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                String name = habitList.get(position).getHabitName();
-                                Cursor data = db.getItemID(name);
-
-                                int itemID = -1;
-                                while (data.moveToNext()) {
-                                    itemID = data.getInt(0);
-                                }
-                                if (itemID > -1) {
-                                    db.deleteHabit(itemID, name);
-                                    populateListView();
-                                }
-                            }
-                        })
-                        .setNegativeButton("I'll try more", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //do nothing
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+                String name = habitList.get(i).getHabitName();
+                Intent Det = new Intent(MainActivity.this, HabitDetail.class);
+                Det.putExtra("name", name);
+                startActivity(Det);
             }
         });
 
