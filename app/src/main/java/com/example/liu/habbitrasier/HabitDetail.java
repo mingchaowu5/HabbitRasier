@@ -34,6 +34,7 @@ public class HabitDetail extends AppCompatActivity {
 
         //TODO
         infor.setText(name);
+        db = new DatabaseHelper(HabitDetail.this);
 
         RgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/HabbitRasier.iml" filepath="$PROJECT_DIR$/HabbitRasier.iml" />
       <module fileurl="file://$PROJECT_DIR$/Habit-Raiser.iml" filepath="$PROJECT_DIR$/Habit-Raiser.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
