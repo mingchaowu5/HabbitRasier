@@ -80,7 +80,7 @@ public class Task extends AppCompatActivity {
         old = Det.getStringExtra("name");
 
         if (old != null){
-            ((EditText) findViewById(R.id.editTaskName)).setText(old);
+            editHabit();
         }
 
         everyDay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -96,7 +96,7 @@ public class Task extends AppCompatActivity {
                     Sun.setChecked(true);
                     weekDay.setChecked(true);
                     weekEnd.setChecked(true);
-                    repeated = "Every Day";
+                    repeated = "EveryDay";
                 }
                 else{
                     Mon.setChecked(false);
@@ -252,7 +252,7 @@ public class Task extends AppCompatActivity {
                     }
 
                     else {
-                        db.addData(name, startDate, endDate, repeat, duration, notification, "");
+                        db.addData(name, startDate, endDate, repeat, duration, notification, description);
                         Intent Task = new Intent(Task.this, MainActivity.class);
                         startActivity(Task);
                     }
@@ -293,5 +293,25 @@ public class Task extends AppCompatActivity {
 
         String date = month + "/" + day + "/" + year;
         textView.setText(date);
+    }
+
+    private void editHabit(){
+        Habit Data = db.getHabit(old);
+        ((EditText) findViewById(R.id.editTaskName)).setText(old);
+        ((TextView) findViewById(R.id.editStartDate)).setText(Data.getstartDate());
+        ((TextView) findViewById(R.id.editEndDate)).setText(Data.getendDate());
+        ((EditText) findViewById(R.id.editDuration)).setText(Data.getDuration());
+        ((EditText) findViewById(R.id.editDescription)).setText(Data.getDescription());
+        ((TextView) findViewById(R.id.textNotification)).setText(Data.getNotification());
+        if(Data.getFrequency() == "EveryDay"){
+            everyDay.setChecked(true);
+        }
+        if(Data.getFrequency() == "Weekdays"){
+            weekDay.setChecked(true);
+        }
+        if(Data.getFrequency() == "Weekends"){
+            weekEnd.setChecked(true);
+        }
+
     }
 }

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         //initial fake data
         //db.addData("Study HCI","","","","",""," Read Critiques");
         populateListView();
-        //Long click listener for ListView - view detail
+        //click listener for ListView - view detail
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

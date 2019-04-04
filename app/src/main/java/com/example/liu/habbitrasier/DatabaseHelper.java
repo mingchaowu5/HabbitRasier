@@ -79,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    //Cursor to get item id
+    //Cursor to get item name
     public Cursor getItemID(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + ColHabitID + " FROM " + TABLE_NAME +
@@ -95,6 +95,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " = '" + id + "' " + " AND " + ColHabitName + " = '" +
                 oldName + "'";
         db.execSQL(query);
+    }
+
+    //Get habit detail
+    public Habit getHabit(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.query(TABLE_NAME, new String[] {ColHabitID, ColHabitName, ColStartDate, ColEndDate, ColFrequency, ColDuration, ColNotification, ColDescription}, ColHabitName + "=?",
+                new String[]{name}, null,null, null, null);
+        if(data !=null&& data.moveToFirst()){
+            Habit temp = new Habit(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getString(7));
+            return temp;
+        }
+        else
+            {
+                Habit temp = new Habit("wrong", "check");
+                return temp;
+            }
     }
 
     //Delete habit

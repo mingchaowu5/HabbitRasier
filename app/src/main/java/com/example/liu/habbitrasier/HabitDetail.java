@@ -4,9 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
+import android.os.Debug;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
@@ -16,9 +18,17 @@ public class HabitDetail extends AppCompatActivity {
     private RadioGroup RgGroup;
     private Button delete;
     private Button edit;
+    private Button checkIn;
     DatabaseHelper db;
     String name;
-    private TextView infor;
+    private TextView HabitName;
+    private TextView StartD;
+    private TextView EndD;
+    private TextView Repeat;
+    private TextView Duration;
+    private TextView Notification;
+    private TextView Description;
+    Habit Data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +40,24 @@ public class HabitDetail extends AppCompatActivity {
         RgGroup = (RadioGroup) findViewById(R.id.rg_group);
         delete = (Button)findViewById(R.id.delete);
         edit = (Button)findViewById(R.id.edit);
-        infor = (TextView) findViewById(R.id.information);
+        checkIn = (Button)findViewById(R.id.checkin);
+        HabitName = (TextView) findViewById(R.id.name);
+        StartD = (TextView) findViewById(R.id.start);
+        EndD = (TextView) findViewById(R.id.end);
+        Repeat = (TextView) findViewById(R.id.repeat);
+        Duration = (TextView) findViewById(R.id.duration);
+        Notification = (TextView) findViewById(R.id.notif);
+        Description = (TextView) findViewById(R.id.desc);
+        db = new DatabaseHelper(HabitDetail.this);
 
-        //TODO
-        infor.setText(name);
+        Data = db.getHabit(name);
+        HabitName.setText("Habit Name: "+Data.getHabitName());
+        StartD.setText("Start Date: "+Data.getstartDate());
+        EndD.setText("End Date: "+ Data.getendDate());
+        Repeat.setText("Repeat: "+Data.getFrequency());
+        Duration.setText("Duration: "+Data.getDuration()+" hours/day");
+        Notification.setText("Notification: "+Data.getNotification());
+        Description.setText("Description: "+Data.getDescription());
 
         RgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -70,6 +94,15 @@ public class HabitDetail extends AppCompatActivity {
             }
         });
 
+        //TODO
+        checkIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent check = new Intent(HabitDetail.this, Working.class);
+                startActivity(check);
+            }
+        });
+
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,12 +117,12 @@ public class HabitDetail extends AppCompatActivity {
                         .setPositiveButton("Sorry but delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Cursor data = db.getItemID(name);
                                 int itemID = -1;
-                                while (data.moveToNext()) {
+                                Cursor data = db.getItemID(name);
+                                while(data.moveToNext()){
                                     itemID = data.getInt(0);
                                 }
-                                if (itemID > -1) {
+                                if(itemID > -1){
                                     db.deleteHabit(itemID, name);
                                 }
                                 Intent Home = new Intent(HabitDetail.this, MainActivity.class);

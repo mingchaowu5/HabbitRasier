@@ -10,10 +10,12 @@ public class Habit {
 
     private String HabitName;
     private Date StartDate;
+    private String startDate;
     private Date EndDate;
+    private String endDate;
     private String Frequency;
     private String Duration;
-    private Boolean Notification;
+    private String Notification;
     private String Description;
 
     public Habit(String name, String des) {
@@ -22,10 +24,20 @@ public class Habit {
     }
 
 
-    public Habit(String name, Date startDate, Date endDate, String freq, String duration, Boolean notif, String desc) {
+    public Habit(String name, Date startDate, Date endDate, String freq, String duration, String notif, String desc) {
         this.HabitName = name;
         this.StartDate = startDate;
         this.EndDate = endDate;
+        this.Frequency = freq;
+        this.Duration = duration;
+        this.Notification = notif;
+        this.Description = desc;
+    }
+
+    public Habit(String name, String startDate, String endDate, String freq, String duration, String notif, String desc) {
+        this.HabitName = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.Frequency = freq;
         this.Duration = duration;
         this.Notification = notif;
@@ -48,6 +60,21 @@ public class Habit {
         this.Description = description;
     }
 
+    public String getstartDate() {
+        return startDate;
+    }
+
+    public void setstartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getendDate() {
+        return endDate;
+    }
+
+    public void setendDate(String endDate) {
+        this.endDate = endDate;
+    }
     public Date getStartDate() {
         return StartDate;
     }
@@ -63,7 +90,6 @@ public class Habit {
     public void setEndDate(Date endDate) {
         this.EndDate = endDate;
     }
-
     public String getFrequency() {
         return Frequency;
     }
@@ -80,11 +106,11 @@ public class Habit {
         this.Duration = duration;
     }
 
-    public Boolean getNotification() {
+    public String getNotification() {
         return Notification;
     }
 
-    public void setNotification(Boolean notification) {
+    public void setNotification(String notification) {
         this.Notification = notification;
     }
 
