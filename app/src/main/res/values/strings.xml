@@ -5,4 +5,7 @@
         <item>Medium</item>
         <item>Low</item>
     </string-array>
+    <string name="notif_id">NOTIF_HB_ID</string>
+    <string name="notif_name">NOTIF_HB_NAME</string>
+    <string name="notif_des">NOTIF_HB_DES</string>
 </resources>
