@@ -20,6 +20,7 @@
         <activity android:name=".Calender" />
         <activity android:name=".Task" />
         <activity android:name=".User" />
+        <activity android:name=".PetActivity" />
         <activity android:name=".HabitDetail" />
         <activity android:name=".Working"></activity>
     </application>

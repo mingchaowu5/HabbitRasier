@@ -4,11 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
-import android.os.Debug;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
@@ -38,9 +36,9 @@ public class HabitDetail extends AppCompatActivity {
         Intent Det = getIntent();
         name = Det.getStringExtra("name");
         RgGroup = (RadioGroup) findViewById(R.id.rg_group);
-        delete = (Button)findViewById(R.id.delete);
-        edit = (Button)findViewById(R.id.edit);
-        checkIn = (Button)findViewById(R.id.checkin);
+        delete = (Button) findViewById(R.id.delete);
+        edit = (Button) findViewById(R.id.edit);
+        checkIn = (Button) findViewById(R.id.checkin);
         HabitName = (TextView) findViewById(R.id.name);
         StartD = (TextView) findViewById(R.id.start);
         EndD = (TextView) findViewById(R.id.end);
@@ -51,13 +49,13 @@ public class HabitDetail extends AppCompatActivity {
         db = new DatabaseHelper(HabitDetail.this);
 
         Data = db.getHabit(name);
-        HabitName.setText("Habit Name: "+Data.getHabitName());
-        StartD.setText("Start Date: "+Data.getstartDate());
-        EndD.setText("End Date: "+ Data.getendDate());
-        Repeat.setText("Repeat: "+Data.getFrequency());
-        Duration.setText("Duration: "+Data.getDuration()+" hours/day");
-        Notification.setText("Notification: "+Data.getNotification());
-        Description.setText("Description: "+Data.getDescription());
+        HabitName.setText("Habit Name: " + Data.getHabitName());
+        StartD.setText("Start Date: " + Data.getstartDate());
+        EndD.setText("End Date: " + Data.getendDate());
+        Repeat.setText("Repeat: " + Data.getFrequency());
+        Duration.setText("Duration: " + Data.getDuration() + " hours/day");
+        Notification.setText("Notification: " + Data.getNotification());
+        Description.setText("Description: " + Data.getDescription());
 
         RgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -75,9 +73,13 @@ public class HabitDetail extends AppCompatActivity {
                         Intent Ach = new Intent(HabitDetail.this, Achievement.class);
                         startActivity(Ach);
                         break;
-                    case R.id.user:
-                        Intent User = new Intent(HabitDetail.this, User.class);
-                        startActivity(User);
+//                    case R.id.user:
+//                        Intent User = new Intent(HabitDetail.this, User.class);
+//                        startActivity(User);
+//                        break;
+                    case R.id.pet:
+                        Intent Pet = new Intent(HabitDetail.this, PetActivity.class);
+                        startActivity(Pet);
                         break;
                     default:
                         break;
@@ -119,10 +121,10 @@ public class HabitDetail extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 int itemID = -1;
                                 Cursor data = db.getItemID(name);
-                                while(data.moveToNext()){
+                                while (data.moveToNext()) {
                                     itemID = data.getInt(0);
                                 }
-                                if(itemID > -1){
+                                if (itemID > -1) {
                                     db.deleteHabit(itemID, name);
                                 }
                                 Intent Home = new Intent(HabitDetail.this, MainActivity.class);

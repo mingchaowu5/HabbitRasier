@@ -2,8 +2,8 @@ package com.example.liu.habbitrasier;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -12,16 +12,13 @@ import android.widget.Toast;
 
 import com.squareup.timessquare.CalendarPickerView;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import static com.squareup.timessquare.CalendarPickerView.SelectionMode.MULTIPLE;
-import static com.squareup.timessquare.CalendarPickerView.SelectionMode.RANGE;
 
 public class Calender extends AppCompatActivity {
 
@@ -65,9 +62,9 @@ public class Calender extends AppCompatActivity {
                         Intent Home = new Intent(Calender.this, MainActivity.class);
                         startActivity(Home);
                         break;
-                    case R.id.user:
-                        Intent User = new Intent(Calender.this, User.class);
-                        startActivity(User);
+                    case R.id.pet:
+                        Intent Pet = new Intent(Calender.this, PetActivity.class);
+                        startActivity(Pet);
                         break;
                     default:
                         break;
@@ -99,22 +96,20 @@ public class Calender extends AppCompatActivity {
         ArrayList<Date> datesColor1 = new ArrayList<>();
         ArrayList<Date> datesColor2 = new ArrayList<>();
         boolean goToColor1 = true;
-        for(Habit h : taskList){
-            boolean startDateOk =(h.getStartDate() != null) &&
+        for (Habit h : taskList) {
+            boolean startDateOk = (h.getStartDate() != null) &&
                     !(h.getStartDate().after(mMaxDate) || h.getStartDate().before(mMinDate));
-            if(startDateOk){
-                    addIntoColorList(h.getStartDate(), goToColor1, datesColor1, datesColor2);
+            if (startDateOk) {
+                addIntoColorList(h.getStartDate(), goToColor1, datesColor1, datesColor2);
             }
-            if(h.getEndDate()!=null){
-                if(h.getEndDate().after(mMaxDate) || h.getEndDate().before(mMinDate));
-                else{
-                    if(startDateOk)
-                    {
+            if (h.getEndDate() != null) {
+                if (h.getEndDate().after(mMaxDate) || h.getEndDate().before(mMinDate)) ;
+                else {
+                    if (startDateOk) {
                         // Add everyday between.
-                      ArrayList<Date> dates= getDatesBetween(h.getStartDate(), h.getEndDate());
+                        ArrayList<Date> dates = getDatesBetween(h.getStartDate(), h.getEndDate());
                         addAllIntoColorList(dates, goToColor1, datesColor1, datesColor2);
-                    }
-                    else
+                    } else
                         addIntoColorList(h.getEndDate(), goToColor1, datesColor1, datesColor2);
                 }
             }
@@ -129,20 +124,20 @@ public class Calender extends AppCompatActivity {
                 .withSelectedDates(datesColor1)
                 .withHighlightedDates(datesColor2)
                 .displayOnly()
-                ;
+        ;
     }
 
-    void addIntoColorList(Date value, boolean goToColor1, ArrayList<Date> datesColor1, ArrayList<Date> datesColor2){
-        if(goToColor1)datesColor1.add(value);
-        else    datesColor2.add(value);
+    void addIntoColorList(Date value, boolean goToColor1, ArrayList<Date> datesColor1, ArrayList<Date> datesColor2) {
+        if (goToColor1) datesColor1.add(value);
+        else datesColor2.add(value);
     }
 
-    void addAllIntoColorList(Collection<Date> value, boolean goToColor1, ArrayList<Date> datesColor1, ArrayList<Date> datesColor2){
-        if(goToColor1)datesColor1.addAll(value);
-        else    datesColor2.addAll(value);
+    void addAllIntoColorList(Collection<Date> value, boolean goToColor1, ArrayList<Date> datesColor1, ArrayList<Date> datesColor2) {
+        if (goToColor1) datesColor1.addAll(value);
+        else datesColor2.addAll(value);
     }
 
-    public void populateTaskList(){
+    public void populateTaskList() {
         taskList.clear();
         Cursor data = db.getData();
         if (data == null) {
@@ -150,8 +145,8 @@ public class Calender extends AppCompatActivity {
         }
         while (data.moveToNext()) {
             //Get the value from the database and add to Arraylist
-            String strStartDate =data.getString(data.getColumnIndex(DatabaseHelper.ColStartDate));
-            String strEndDate=  data.getString(data.getColumnIndex(DatabaseHelper.ColEndDate));
+            String strStartDate = data.getString(data.getColumnIndex(DatabaseHelper.ColStartDate));
+            String strEndDate = data.getString(data.getColumnIndex(DatabaseHelper.ColEndDate));
             Habit h = new Habit
                     (
                             data.getString(data.getColumnIndex(DatabaseHelper.ColHabitName)),
@@ -161,11 +156,9 @@ public class Calender extends AppCompatActivity {
             // dd/mm/yyyy
             // Try to parse the date.
             ArrayList<Integer> startDate = parse(strStartDate), endDate = parse(strEndDate);
-            if(startDate == null || endDate == null)
-            {
+            if (startDate == null || endDate == null) {
                 // Leave them null.
-            }
-            else{
+            } else {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.YEAR, startDate.get(2));
                 calendar.set(Calendar.MONTH, startDate.get(1));
@@ -184,14 +177,14 @@ public class Calender extends AppCompatActivity {
     }
 
     public ArrayList<Integer> parse(String strDate) {
-        String[] strs =  strDate.split("/");
+        String[] strs = strDate.split("/");
         ArrayList<Integer> res = new ArrayList<>();
-        if(strs.length!=3) return null;
+        if (strs.length != 3) return null;
 
-        try{
-            for (String s:strs)
+        try {
+            for (String s : strs)
                 res.add(Integer.parseInt(s));
-        }catch  (Exception e){
+        } catch (Exception e) {
             return null;
         }
         return res;

@@ -38,9 +38,9 @@ public class Achievement extends AppCompatActivity {
                         Intent Home = new Intent(Achievement.this, MainActivity.class);
                         startActivity(Home);
                         break;
-                    case R.id.user:
-                        Intent User = new Intent(Achievement.this, User.class);
-                        startActivity(User);
+                    case R.id.pet:
+                        Intent Pet = new Intent(Achievement.this, PetActivity.class);
+                        startActivity(Pet);
                         break;
                     default:
                         break;

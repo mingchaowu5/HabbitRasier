@@ -3,29 +3,21 @@ package com.example.liu.habbitrasier;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.CheckBox;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Task extends AppCompatActivity {
@@ -186,9 +178,13 @@ public class Task extends AppCompatActivity {
                         Intent Home = new Intent(Task.this, MainActivity.class);
                         startActivity(Home);
                         break;
-                    case R.id.user:
-                        Intent User = new Intent(Task.this, User.class);
-                        startActivity(User);
+//                    case R.id.user:
+//                        Intent User = new Intent(Task.this, User.class);
+//                        startActivity(User);
+//                        break;
+                    case R.id.pet:
+                        Intent Pet = new Intent(Task.this, PetActivity.class);
+                        startActivity(Pet);
                         break;
                     case R.id.achievement:
                         Intent Ach = new Intent(Task.this, Achievement.class);

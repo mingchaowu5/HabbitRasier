@@ -1,23 +1,20 @@
 package com.example.liu.habbitrasier;
 
-import android.app.DatePickerDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -75,9 +72,13 @@ public class MainActivity extends AppCompatActivity {
                         Intent Ach = new Intent(MainActivity.this, Achievement.class);
                         startActivity(Ach);
                         break;
-                    case R.id.user:
-                        Intent User = new Intent(MainActivity.this, User.class);
-                        startActivity(User);
+//                    case R.id.user:
+//                        Intent User = new Intent(MainActivity.this, User.class);
+//                        startActivity(User);
+//                        break;
+                    case R.id.pet:
+                        Intent Pet = new Intent(MainActivity.this, PetActivity.class);
+                        startActivity(Pet);
                         break;
                     default:
                         break;
@@ -128,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
     }
-
 
 
     //Populate listview
