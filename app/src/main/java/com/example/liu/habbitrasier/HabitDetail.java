@@ -31,6 +31,8 @@ public class HabitDetail extends AppCompatActivity {
     private TextView Description;
     Habit Data;
 
+    boolean m_checkedIn = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,23 +108,28 @@ public class HabitDetail extends AppCompatActivity {
                 Intent check = new Intent(HabitDetail.this, Working.class);
                 startActivity(check);
 
-                // Get the habit's timer.
-                float overallSeconds = 9;
-                try{
-                    if(Data!=null){
-                        // it's a string representing how many hours.
-                        String strHowManyHours = Data.getDuration();
-                        float howManyHours = Float.parseFloat(strHowManyHours);
-                        overallSeconds = howManyHours * 3600;
+                // Check in.
+                if(!m_checkedIn){
+                    // Get the habit's timer.
+                    float overallSeconds = 9;
+                    try{
+                        if(Data!=null){
+                            // it's a string representing how many hours.
+                            String strHowManyHours = Data.getDuration();
+                            float howManyHours = Float.parseFloat(strHowManyHours);
+                            overallSeconds = howManyHours * 3600;
+                        }
                     }
-                }
-                catch (Exception e){
+                    catch (Exception e){
 
-                }
+                    }
+                    // Start the timer.
+                    Thread timerThread = new Thread(new HabitDoingTimer(overallSeconds, HabitDetail.this));
+                    timerThread.start();
 
-                // Start the timer.
-                Thread timerThread = new Thread(new HabitDoingTimer(overallSeconds, HabitDetail.this));
-                timerThread.start();
+                    // flag checkedIn.
+                    m_checkedIn = true;
+                }
             }
         });
 
