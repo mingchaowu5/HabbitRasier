@@ -1,10 +1,13 @@
 package com.example.liu.habbitrasier;
 
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -102,6 +105,24 @@ public class HabitDetail extends AppCompatActivity {
             public void onClick(View view) {
                 Intent check = new Intent(HabitDetail.this, Working.class);
                 startActivity(check);
+
+                // Get the habit's timer.
+                float overallSeconds = 9;
+                try{
+                    if(Data!=null){
+                        // it's a string representing how many hours.
+                        String strHowManyHours = Data.getDuration();
+                        float howManyHours = Float.parseFloat(strHowManyHours);
+                        overallSeconds = howManyHours * 3600;
+                    }
+                }
+                catch (Exception e){
+
+                }
+
+                // Start the timer.
+                Thread timerThread = new Thread(new HabitDoingTimer(overallSeconds, HabitDetail.this));
+                timerThread.start();
             }
         });
 
@@ -142,4 +163,61 @@ public class HabitDetail extends AppCompatActivity {
             }
         });
     }
+
+    protected class HabitDoingTimer implements Runnable{
+
+        AppCompatActivity m_activity = null;
+        float m_overallSeconds = 0;
+        NotificationCompat.Builder m_notifBuilder = null;
+        NotificationManagerCompat m_notifManager = null;
+
+        HabitDoingTimer(float overallSeconds, AppCompatActivity activity){
+            this.m_overallSeconds = overallSeconds;
+            this.m_activity = activity;
+
+            // Set up notification stuff.
+            // Set a tapping handler.
+            // Create an explicit intent for an Activity in your app
+            Intent intent = new Intent(m_activity, HabitDetail.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendingIntent = PendingIntent.getActivity(m_activity, 0, intent, 0);
+
+            // Build a notification.
+            String CHANNEL_ID = getString(R.string.notif_id);
+            m_notifBuilder = new NotificationCompat.Builder(m_activity, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.notification_icon)
+                    .setContentTitle("Habit Raiser")
+                    .setContentText("Read paper!")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    // Set the intent that will fire when the user taps the notification
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+            m_notifManager = NotificationManagerCompat.from(m_activity);
+        }
+
+        void popNotification(){
+            // notificationId is a unique int for each notification that you must define
+            m_notifManager.notify(R.string.notif_id, m_notifBuilder.build());
+        }
+
+        @Override
+        public void run() {
+            float interval = m_overallSeconds /3;
+            float progress=interval;
+            while(progress< m_overallSeconds){
+                try {
+                    Thread.sleep((long)(interval * 1000));
+                    // Pop up a notification.
+                    popNotification();
+
+                    // Bump up the progress
+                    progress+=interval;
+                }catch (Exception e){
+
+                }
+            }
+        }
+    }
+
 }
+
