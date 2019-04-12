@@ -2,13 +2,10 @@ package com.example.liu.habbitrasier;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -128,6 +125,15 @@ public class MainActivity extends AppCompatActivity {
 
     //Populate listview
     private void populateListView() {
+        // Uncomment these lines to drop a table, and create a new table. Clear Data is optional.
+        // This function is called everytime the app is launched. Keep in mind.
+
+        // db.dropTable();
+        // db.createTable();
+        // db.clearData();
+
+        // If need to delete the data table, uncomment this line:
+
         habitList.clear();
         Cursor data = db.getData();
         if (data == null) {
@@ -135,7 +141,19 @@ public class MainActivity extends AppCompatActivity {
         }
         while (data.moveToNext()) {
             //Get the value from the database and add to Arraylist
-            habitList.add(new Habit(data.getString(data.getColumnIndex("habitName")), data.getString(data.getColumnIndex("description")), data.getString(data.getColumnIndex("priority"))));
+            try{
+                int ciHabitName = data.getColumnIndex("habitName");
+                int ciDesp = data.getColumnIndex("description");
+                int ciPriority = data.getColumnIndex("priority");
+                String strHabitName = data.getString(ciHabitName);
+                String strDesp = data.getString(ciDesp);
+                String strPriority = data.getString(ciPriority);
+
+                habitList.add(new Habit(strHabitName, strDesp, strPriority));
+            }catch (Exception e){
+                // Skip.
+int a = 0;
+            }
         }
 
         lst = (ListView) findViewById(R.id.lst);
