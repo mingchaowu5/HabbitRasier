@@ -21,7 +21,6 @@
         <activity android:name=".Task" />
         <activity android:name=".PetActivity" />
         <activity android:name=".HabitDetail" />
-        <activity android:name=".Working"></activity>
     </application>
 
 </manifest>
