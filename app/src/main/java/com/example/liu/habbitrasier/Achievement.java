@@ -58,7 +58,7 @@ public class Achievement extends AppCompatActivity {
         }
         while (data.moveToNext()) {
             //Get the value from the database and add to Arraylist
-            achList.add(new Habit(data.getString(data.getColumnIndex("habitName")), data.getString(data.getColumnIndex("description"))));
+            achList.add(new Habit(data.getString(data.getColumnIndex("habitName")), data.getString(data.getColumnIndex("description")),data.getString(data.getColumnIndex("priority"))));
         }
 
         achlst = (ListView) findViewById(R.id.achlst);

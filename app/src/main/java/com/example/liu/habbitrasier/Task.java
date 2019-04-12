@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -31,14 +32,8 @@ public class Task extends AppCompatActivity {
     private CheckBox everyDay;
     private CheckBox weekDay;
     private CheckBox weekEnd;
-    private CheckBox Mon;
-    private CheckBox Tue;
-    private CheckBox Wed;
-    private CheckBox Thur;
-    private CheckBox Fri;
-    private CheckBox Sat;
-    private CheckBox Sun;
     private String old;
+    private Spinner prio;
 
     private String repeated;
 
@@ -56,17 +51,12 @@ public class Task extends AppCompatActivity {
         everyDay = (CheckBox) findViewById(R.id.every);
         weekDay = (CheckBox)findViewById(R.id.weekD);
         weekEnd = (CheckBox)findViewById(R.id.weekE);
-        Mon = (CheckBox) findViewById(R.id.mon);
-        Tue = (CheckBox) findViewById(R.id.tues);
-        Wed = (CheckBox) findViewById(R.id.wed);
-        Thur = (CheckBox) findViewById(R.id.thur);
-        Fri = (CheckBox) findViewById(R.id.fri);
-        Sat = (CheckBox) findViewById(R.id.sat);
-        Sun = (CheckBox) findViewById(R.id.sun);
 
 
         editStartDate = (TextView)findViewById(R.id.editStartDate);
         editEndDate = (TextView)findViewById(R.id.editEndDate);
+
+        prio = (Spinner)findViewById(R.id.spinner);
 
         Intent Det = getIntent();
         old = Det.getStringExtra("name");
@@ -79,25 +69,11 @@ public class Task extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
-                    Mon.setChecked(true);
-                    Tue.setChecked(true);
-                    Wed.setChecked(true);
-                    Thur.setChecked(true);
-                    Fri.setChecked(true);
-                    Sat.setChecked(true);
-                    Sun.setChecked(true);
                     weekDay.setChecked(true);
                     weekEnd.setChecked(true);
                     repeated = "EveryDay";
                 }
                 else{
-                    Mon.setChecked(false);
-                    Tue.setChecked(false);
-                    Wed.setChecked(false);
-                    Thur.setChecked(false);
-                    Fri.setChecked(false);
-                    Sat.setChecked(false);
-                    Sun.setChecked(false);
                     weekDay.setChecked(false);
                     weekEnd.setChecked(false);
                     repeated = null;
@@ -108,20 +84,23 @@ public class Task extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
-                    Mon.setChecked(true);
-                    Tue.setChecked(true);
-                    Wed.setChecked(true);
-                    Thur.setChecked(true);
-                    Fri.setChecked(true);
-                    repeated = "Weekdays";
+                    if(repeated == "Weekends"){
+                        repeated = "EveryDay";
+                        everyDay.setChecked(true);
+                    }
+                    else if (repeated == null){
+                        repeated = "Weekdays";
+                    }
                 }
                 else{
-                    Mon.setChecked(false);
-                    Tue.setChecked(false);
-                    Wed.setChecked(false);
-                    Thur.setChecked(false);
-                    Fri.setChecked(false);
-                    repeated = null;
+                    if(repeated == "EveryDay"){
+                        repeated = "Weekends";
+                        everyDay.setChecked(false);
+                        weekEnd.setChecked(true);
+                    }
+                    else if (repeated == "Weekdays"){
+                        repeated = null;
+                    }
                 }
             }
         });
@@ -129,14 +108,23 @@ public class Task extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
-                    Sat.setChecked(true);
-                    Sun.setChecked(true);
-                    repeated = "Weekends";
+                    if(repeated == "Weekdays"){
+                        repeated = "EveryDay";
+                        everyDay.setChecked(true);
+                    }
+                    else if (repeated == null){
+                        repeated = "Weekends";
+                    }
                 }
                 else{
-                    Sat.setChecked(false);
-                    Sun.setChecked(false);
-                    repeated = null;
+                    if(repeated == "EveryDay"){
+                        repeated = "Weekdays";
+                        everyDay.setChecked(false);
+                        weekDay.setChecked(true);
+                    }
+                    else if (repeated == "Weekends"){
+                        repeated = null;
+                    }
                 }
             }
         });
@@ -178,10 +166,6 @@ public class Task extends AppCompatActivity {
                         Intent Home = new Intent(Task.this, MainActivity.class);
                         startActivity(Home);
                         break;
-//                    case R.id.user:
-//                        Intent User = new Intent(Task.this, User.class);
-//                        startActivity(User);
-//                        break;
                     case R.id.pet:
                         Intent Pet = new Intent(Task.this, PetActivity.class);
                         startActivity(Pet);
@@ -208,8 +192,8 @@ public class Task extends AppCompatActivity {
                 String repeat = repeated;
                 String duration =((EditText) findViewById(R.id.editDuration)).getText().toString();
                 String notification =((TextView) findViewById(R.id.textNotification)).getText().toString();
+                String priority = prio.getSelectedItem().toString();
                 String description = ((EditText) findViewById(R.id.editDescription)).getText().toString();
-                int dur = Integer.parseInt(duration);
                 System.out.println("-----------------------------" + name + description);
                 if(name == null||startDate == null|| endDate == null||repeated == null|| duration == null ){
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -229,6 +213,7 @@ public class Task extends AppCompatActivity {
                             .show();
                 }
                 else {
+                    int dur = Integer.parseInt(duration);
                     if (dur>24){
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             builder = new AlertDialog.Builder(Task.this, android.R.style.Theme_Material_Dialog_Alert);
@@ -248,7 +233,7 @@ public class Task extends AppCompatActivity {
                     }
 
                     else {
-                        db.addData(name, startDate, endDate, repeat, duration, notification, description);
+                        db.addData(name, startDate, endDate, repeat, duration, notification, priority, description);
                         Intent Task = new Intent(Task.this, MainActivity.class);
                         startActivity(Task);
                     }
@@ -302,11 +287,21 @@ public class Task extends AppCompatActivity {
         if(Data.getFrequency() == "EveryDay"){
             everyDay.setChecked(true);
         }
-        if(Data.getFrequency() == "Weekdays"){
+        else if(Data.getFrequency() == "Weekdays"){
             weekDay.setChecked(true);
         }
-        if(Data.getFrequency() == "Weekends"){
+        else if(Data.getFrequency() == "Weekends"){
             weekEnd.setChecked(true);
+        }
+
+        if(Data.getPriority() == "High"){
+            prio.setSelection(0);
+        }
+        else if (Data.getPriority() == "Medium"){
+            prio.setSelection(1);
+        }
+        else if (Data.getPriority()=="Low"){
+            prio.setSelection(2);
         }
 
     }

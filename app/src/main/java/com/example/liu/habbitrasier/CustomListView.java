@@ -47,6 +47,9 @@ public class CustomListView extends ArrayAdapter<Habit> {
         TextView des = (TextView) listItem.findViewById(R.id.tvDescription);
         des.setText(currentHabit.getDescription());
 
+        TextView pri = (TextView) listItem.findViewById(R.id.tvPriority);
+        pri.setText("Priority: "+currentHabit.getPriority());
+
         return listItem;
     }
 

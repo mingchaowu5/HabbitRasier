@@ -25,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String ColFrequency = "frequency";
     public static final String ColDuration = "duration";
     public static final String ColNotification = "notification";
+    public static final String ColPriority = "priority";
     public static final String ColDescription = "description";
 
     public DatabaseHelper(Context context) {
@@ -34,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ColHabitName + " TEXT, " + ColStartDate + " TEXT, " + ColEndDate + " TEXT, " + ColFrequency + " TEXT, " + ColDuration + " TEXT, " + ColNotification + " TEXT, " + ColDescription + " TEXT)";
+                ColHabitName + " TEXT, " + ColStartDate + " TEXT, " + ColEndDate + " TEXT, " + ColFrequency + " TEXT, " + ColDuration + " TEXT, " + ColNotification + " TEXT, " + ColPriority +" TEXT, " + ColDescription + " TEXT)";
         sqLiteDatabase.execSQL(createTable);
     }
 
@@ -43,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS '" + TABLE_NAME + "'");
     }
 
-    public boolean addData(String item1, String item2, String item3, String item4, String item5, String item6, String item7) {
+    public boolean addData(String item1, String item2, String item3, String item4, String item5, String item6, String item7, String item8) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(ColHabitName, item1);
@@ -52,7 +53,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(ColFrequency, item4);
         contentValues.put(ColDuration, item5);
         contentValues.put(ColNotification, item6);
-        contentValues.put(ColDescription, item7);
+        contentValues.put(ColPriority,item7);
+        contentValues.put(ColDescription, item8);
 
         Log.d(TAG, "addData: Adding Habit, " + item1 + " to " + TABLE_NAME);
 
@@ -99,13 +101,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Get habit detail
     public Habit getHabit(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.query(TABLE_NAME, new String[]{ColHabitID, ColHabitName, ColStartDate, ColEndDate, ColFrequency, ColDuration, ColNotification, ColDescription}, ColHabitName + "=?",
+        Cursor data = db.query(TABLE_NAME, new String[]{ColHabitID, ColHabitName, ColStartDate, ColEndDate, ColFrequency, ColDuration, ColNotification, ColPriority, ColDescription}, ColHabitName + "=?",
                 new String[]{name}, null, null, null, null);
         if (data != null && data.moveToFirst()) {
-            Habit temp = new Habit(data.getString(1), data.getString(2), data.getString(3), data.getString(4), data.getString(5), data.getString(6), data.getString(7));
+            Habit temp = new Habit(data.getString(1), data.getString(2), data.getString(3), data.getString(4), data.getString(5), data.getString(6), data.getString(7),data.getString(8));
             return temp;
         } else {
-            Habit temp = new Habit("wrong", "check");
+            Habit temp = new Habit("wrong", "check","need change");
             return temp;
         }
     }

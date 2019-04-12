@@ -1,5 +1,7 @@
 package com.example.liu.habbitrasier;
 
+import android.renderscript.RenderScript;
+
 import java.util.Date;
 
 /**
@@ -17,10 +19,12 @@ public class Habit {
     private String Duration;
     private String Notification;
     private String Description;
+    private String Priority;
 
-    public Habit(String name, String des) {
+    public Habit(String name, String des, String pri) {
         this.HabitName = name;
         this.Description = des;
+        this.Priority = pri;
     }
 
 
@@ -34,7 +38,7 @@ public class Habit {
         this.Description = desc;
     }
 
-    public Habit(String name, String startDate, String endDate, String freq, String duration, String notif, String desc) {
+    public Habit(String name, String startDate, String endDate, String freq, String duration, String notif, String prior, String desc) {
         this.HabitName = name;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -42,6 +46,7 @@ public class Habit {
         this.Duration = duration;
         this.Notification = notif;
         this.Description = desc;
+        this.Priority = prior;
     }
 
     public String getHabitName() {
@@ -113,6 +118,10 @@ public class Habit {
     public void setNotification(String notification) {
         this.Notification = notification;
     }
+
+    public String getPriority(){return Priority;}
+
+    public void setPriority(String priority){this.Priority=priority;}
 
 
 }

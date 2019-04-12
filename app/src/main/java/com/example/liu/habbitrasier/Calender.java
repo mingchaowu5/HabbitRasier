@@ -150,7 +150,8 @@ public class Calender extends AppCompatActivity {
             Habit h = new Habit
                     (
                             data.getString(data.getColumnIndex(DatabaseHelper.ColHabitName)),
-                            data.getString(data.getColumnIndex(DatabaseHelper.ColDescription))
+                            data.getString(data.getColumnIndex(DatabaseHelper.ColDescription)),
+                            data.getString(data.getColumnIndex(DatabaseHelper.ColPriority))
                     );
 
             // dd/mm/yyyy

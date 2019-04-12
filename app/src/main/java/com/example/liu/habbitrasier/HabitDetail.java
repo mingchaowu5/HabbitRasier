@@ -28,6 +28,7 @@ public class HabitDetail extends AppCompatActivity {
     private TextView Repeat;
     private TextView Duration;
     private TextView Notification;
+    private TextView Priority;
     private TextView Description;
     Habit Data;
 
@@ -50,6 +51,7 @@ public class HabitDetail extends AppCompatActivity {
         Repeat = (TextView) findViewById(R.id.repeat);
         Duration = (TextView) findViewById(R.id.duration);
         Notification = (TextView) findViewById(R.id.notif);
+        Priority = (TextView)findViewById(R.id.prior);
         Description = (TextView) findViewById(R.id.desc);
         db = new DatabaseHelper(HabitDetail.this);
 
@@ -60,6 +62,7 @@ public class HabitDetail extends AppCompatActivity {
         Repeat.setText("Repeat: " + Data.getFrequency());
         Duration.setText("Duration: " + Data.getDuration() + " hours/day");
         Notification.setText("Notification: " + Data.getNotification());
+        Priority.setText("Priority: "+Data.getPriority());
         Description.setText("Description: " + Data.getDescription());
 
         RgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -78,10 +81,6 @@ public class HabitDetail extends AppCompatActivity {
                         Intent Ach = new Intent(HabitDetail.this, Achievement.class);
                         startActivity(Ach);
                         break;
-//                    case R.id.user:
-//                        Intent User = new Intent(HabitDetail.this, User.class);
-//                        startActivity(User);
-//                        break;
                     case R.id.pet:
                         Intent Pet = new Intent(HabitDetail.this, PetActivity.class);
                         startActivity(Pet);
@@ -105,9 +104,6 @@ public class HabitDetail extends AppCompatActivity {
         checkIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent check = new Intent(HabitDetail.this, Working.class);
-                startActivity(check);
-
                 // Check in.
                 if(!m_checkedIn){
                     // Get the habit's timer.

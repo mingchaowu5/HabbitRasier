@@ -11,7 +11,16 @@
         android:layout_width="210dp"
         android:layout_height="39dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="320dp"
+        android:layout_marginTop="252dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/prior"
+        android:layout_width="210dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="292dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,7 +29,7 @@
         android:layout_width="212dp"
         android:layout_height="41dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="264dp"
+        android:layout_marginTop="208dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +38,7 @@
         android:layout_width="210dp"
         android:layout_height="39dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="212dp"
+        android:layout_marginTop="168dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +47,7 @@
         android:layout_width="208dp"
         android:layout_height="37dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="136dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,7 +56,7 @@
         android:layout_width="208dp"
         android:layout_height="41dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,7 +65,7 @@
         android:layout_width="210dp"
         android:layout_height="37dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -134,7 +143,7 @@
         android:layout_width="208dp"
         android:layout_height="37dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -142,9 +151,19 @@
         android:id="@+id/checkin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="305dp"
-        android:layout_marginEnd="17dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="40dp"
         android:text="Check In"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkout" />
+
+    <Button
+        android:id="@+id/checkout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="88dp"
+        android:text="Check Out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

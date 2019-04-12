@@ -72,10 +72,6 @@ public class MainActivity extends AppCompatActivity {
                         Intent Ach = new Intent(MainActivity.this, Achievement.class);
                         startActivity(Ach);
                         break;
-//                    case R.id.user:
-//                        Intent User = new Intent(MainActivity.this, User.class);
-//                        startActivity(User);
-//                        break;
                     case R.id.pet:
                         Intent Pet = new Intent(MainActivity.this, PetActivity.class);
                         startActivity(Pet);
@@ -139,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         }
         while (data.moveToNext()) {
             //Get the value from the database and add to Arraylist
-            habitList.add(new Habit(data.getString(data.getColumnIndex("habitName")), data.getString(data.getColumnIndex("description"))));
+            habitList.add(new Habit(data.getString(data.getColumnIndex("habitName")), data.getString(data.getColumnIndex("description")), data.getString(data.getColumnIndex("priority"))));
         }
 
         lst = (ListView) findViewById(R.id.lst);
