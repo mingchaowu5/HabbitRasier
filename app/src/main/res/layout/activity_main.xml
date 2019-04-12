@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@drawable/user"
+            android:drawableTop="@drawable/pet"
             android:gravity="center" />
     </RadioGroup>
 
