@@ -68,6 +68,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void createTable(){
+        String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ColHabitName + " TEXT, " + ColStartDate + " TEXT, " + ColEndDate + " TEXT, " + ColFrequency + " TEXT, " + ColDuration + " TEXT, " + ColNotification + " TEXT, " + ColPriority +" TEXT, " + ColDescription + " TEXT)";
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.execSQL(createTable);
+    }
+
+    public void dropTable(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS '" + TABLE_NAME + "'");
+    }
+
+    public int clearData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int countRowsDeleted = db.delete(TABLE_NAME, "1", null);
+        return countRowsDeleted;
+    }
+
     //Cursor to return database data
     public Cursor getData() {
         Log.d(TAG, "getData: got into function.");

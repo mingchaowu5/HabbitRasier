@@ -19,7 +19,10 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Task extends AppCompatActivity {
     private Button save, cancel;
@@ -132,15 +135,15 @@ public class Task extends AppCompatActivity {
         editStartDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                ShowDatePicker();
                 mSelectedForDatePick = editStartDate;
+                ShowDatePicker(mSelectedForDatePick);
             }
         });
         editEndDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                ShowDatePicker();
                 mSelectedForDatePick = editEndDate;
+                ShowDatePicker(mSelectedForDatePick);
             }
         });
         mOnDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -250,13 +253,34 @@ public class Task extends AppCompatActivity {
 
     }
 
+    // Parse MM/dd/yyyy to a date.
+    private Date ParseDate(String dateStr){
+        try {
+            Date date =  new SimpleDateFormat("MM/dd/yyyy").parse(dateStr);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-
-    private void ShowDatePicker() {
+    private void ShowDatePicker(TextView view) {
+        int year,month,day;
         Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        // Try parsing the current display first
+        String dateStr = view.getText().toString();
+        if(!dateStr.isEmpty()){
+            Date date = ParseDate(dateStr);
+            if(date != null){
+                // Show the date.
+                cal.setTime(date);
+            }
+        }
+
+        year = cal.get(Calendar.YEAR);
+        month = cal.get(Calendar.MONTH);
+        day = cal.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog dpd = new DatePickerDialog(
                 Task.this,
