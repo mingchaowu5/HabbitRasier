@@ -4,6 +4,10 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -176,6 +180,7 @@ public class HabitDetail extends AppCompatActivity {
 
         HabitDoingTimer(float overallSeconds, AppCompatActivity activity){
             this.m_overallSeconds = overallSeconds;
+// /* For Debug */            this.m_overallSeconds = 3;
             this.m_activity = activity;
 
             // Set up notification stuff.
@@ -187,6 +192,7 @@ public class HabitDetail extends AppCompatActivity {
 
             // Build a notification.
             String CHANNEL_ID = getString(R.string.notif_id);
+            Uri ringtoneNotif = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.notification2);
             m_notifBuilder = new NotificationCompat.Builder(m_activity, CHANNEL_ID)
                     .setSmallIcon(R.drawable.notification_icon)
                     .setContentTitle("Habit Raiser")
@@ -194,6 +200,9 @@ public class HabitDetail extends AppCompatActivity {
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     // Set the intent that will fire when the user taps the notification
                     .setContentIntent(pendingIntent)
+                    .setSound(ringtoneNotif)
+                    .setVibrate(new long[] { 1000, 1000, 1000})
+                    .setColor(Color.BLUE)
                     .setAutoCancel(true);
             m_notifManager = NotificationManagerCompat.from(m_activity);
         }
@@ -201,6 +210,12 @@ public class HabitDetail extends AppCompatActivity {
         void popNotification(){
             // notificationId is a unique int for each notification that you must define
             m_notifManager.notify(R.string.notif_id, m_notifBuilder.build());
+
+            // Sound
+//            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//            Uri ringtoneNotif = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.notification2);
+//            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), ringtoneNotif);
+//            r.play();
         }
 
         @Override

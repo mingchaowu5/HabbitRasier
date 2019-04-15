@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.squareup.timessquare.CalendarPickerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -96,23 +98,26 @@ public class Calender extends AppCompatActivity {
         ArrayList<Date> datesColor1 = new ArrayList<>();
         ArrayList<Date> datesColor2 = new ArrayList<>();
         boolean goToColor1 = true;
+        // For each habit, set date range
         for (Habit h : taskList) {
-            boolean startDateOk = (h.getStartDate() != null) &&
-                    !(h.getStartDate().after(mMaxDate) || h.getStartDate().before(mMinDate));
-            if (startDateOk) {
-                addIntoColorList(h.getStartDate(), goToColor1, datesColor1, datesColor2);
-            }
-            if (h.getEndDate() != null) {
-                if (h.getEndDate().after(mMaxDate) || h.getEndDate().before(mMinDate)) ;
-                else {
-                    if (startDateOk) {
-                        // Add everyday between.
-                        ArrayList<Date> dates = getDatesBetween(h.getStartDate(), h.getEndDate());
-                        addAllIntoColorList(dates, goToColor1, datesColor1, datesColor2);
-                    } else
-                        addIntoColorList(h.getEndDate(), goToColor1, datesColor1, datesColor2);
+            Date startDate = h.getStartDate();
+            Date endDate = h.getEndDate();
+            // Get dates in between. (including startdate and end date)
+            ArrayList<Date> dates = getDatesBetween(h.getStartDate(), h.getEndDate());
+            // Remove dates out of bound.
+            int size = dates.size();
+            for(int i=0;i<size;){
+                if(isOutOfBound(dates.get(i))){
+                    dates.remove(i);
+                    size = dates.size();
+                }
+                else{
+                    i++;
                 }
             }
+
+            // Add the dates to the color list.
+            addAllIntoColorList(dates, goToColor1, datesColor1, datesColor2);
 
             // switch color.
             goToColor1 = !goToColor1;
@@ -127,6 +132,10 @@ public class Calender extends AppCompatActivity {
         ;
     }
 
+    boolean isOutOfBound(Date date){
+        return date.after(mMaxDate)||date.before(mMinDate);
+    }
+
     void addIntoColorList(Date value, boolean goToColor1, ArrayList<Date> datesColor1, ArrayList<Date> datesColor2) {
         if (goToColor1) datesColor1.add(value);
         else datesColor2.add(value);
@@ -135,6 +144,17 @@ public class Calender extends AppCompatActivity {
     void addAllIntoColorList(Collection<Date> value, boolean goToColor1, ArrayList<Date> datesColor1, ArrayList<Date> datesColor2) {
         if (goToColor1) datesColor1.addAll(value);
         else datesColor2.addAll(value);
+    }
+
+    // Parse MM/dd/yyyy to a date.
+    private Date ParseDate(String dateStr){
+        try {
+            Date date =  new SimpleDateFormat("MM/dd/yyyy").parse(dateStr);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void populateTaskList() {
@@ -154,43 +174,17 @@ public class Calender extends AppCompatActivity {
                             data.getString(data.getColumnIndex(DatabaseHelper.ColPriority))
                     );
 
-            // dd/mm/yyyy
+            // MM/dd/yyyy
             // Try to parse the date.
-            ArrayList<Integer> startDate = parse(strStartDate), endDate = parse(strEndDate);
-            if (startDate == null || endDate == null) {
-                // Leave them null.
-            } else {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.YEAR, startDate.get(2));
-                calendar.set(Calendar.MONTH, startDate.get(1));
-                calendar.set(Calendar.DAY_OF_MONTH, startDate.get(0));
-                Date date = calendar.getTime();
-                h.setStartDate(date);
-
-                calendar.set(Calendar.YEAR, endDate.get(2));
-                calendar.set(Calendar.MONTH, endDate.get(1));
-                calendar.set(Calendar.DAY_OF_MONTH, endDate.get(0));
-                date = calendar.getTime();
-                h.setEndDate(date);
-            }
+            Date startDate = ParseDate(strStartDate);
+            Date endDate = ParseDate(strEndDate);
+            h.setStartDate(startDate);
+            h.setEndDate(endDate);
             taskList.add(h);
         }
     }
 
-    public ArrayList<Integer> parse(String strDate) {
-        String[] strs = strDate.split("/");
-        ArrayList<Integer> res = new ArrayList<>();
-        if (strs.length != 3) return null;
-
-        try {
-            for (String s : strs)
-                res.add(Integer.parseInt(s));
-        } catch (Exception e) {
-            return null;
-        }
-        return res;
-    }
-
+    // Inclusive
     public static ArrayList<Date> getDatesBetween(
             Date startDate, Date endDate) {
         ArrayList<Date> datesInRange = new ArrayList<>();
@@ -199,6 +193,7 @@ public class Calender extends AppCompatActivity {
 
         Calendar endCalendar = new GregorianCalendar();
         endCalendar.setTime(endDate);
+        endCalendar.add(Calendar.HOUR, 12);
 
         while (calendar.before(endCalendar)) {
             Date result = calendar.getTime();

@@ -4,6 +4,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -115,6 +119,12 @@ public class MainActivity extends AppCompatActivity {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
+//            channel.setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.notification2),
+//                    new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+//                            .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+//                            .setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT).build());
+//            channel.setVibrationPattern(new long[] { 1000, 1000, 1000});
+//            channel.setLightColor(Color.RED);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
