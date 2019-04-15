@@ -54,6 +54,15 @@ public class PetDataHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void changeFood(boolean add, int amount){
+        Pet pet = getPet("pet");
+        if (add) {
+            updateFood(String.valueOf(Integer.valueOf(pet.getFood()) + amount), "pet");
+        } else {
+            updateFood(String.valueOf(Integer.valueOf(pet.getFood()) - amount), "pet");
+        }
+    }
+
     //Cursor to return database data
 //    public Cursor getData() {
 //        Log.d(TAG, "getData: got into function.");

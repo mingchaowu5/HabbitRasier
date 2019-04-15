@@ -18,12 +18,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class HabitDetail extends AppCompatActivity {
     private RadioGroup RgGroup;
     private Button delete;
     private Button edit;
     private Button checkIn;
+    private Button checkOut;
     DatabaseHelper db;
     String name;
     private TextView HabitName;
@@ -35,6 +37,7 @@ public class HabitDetail extends AppCompatActivity {
     private TextView Priority;
     private TextView Description;
     Habit Data;
+    Thread timerThread = null;
 
     boolean m_checkedIn = false;
 
@@ -49,6 +52,7 @@ public class HabitDetail extends AppCompatActivity {
         delete = (Button) findViewById(R.id.delete);
         edit = (Button) findViewById(R.id.edit);
         checkIn = (Button) findViewById(R.id.checkin);
+        checkOut = (Button) findViewById(R.id.checkout);
         HabitName = (TextView) findViewById(R.id.name);
         StartD = (TextView) findViewById(R.id.start);
         EndD = (TextView) findViewById(R.id.end);
@@ -104,7 +108,6 @@ public class HabitDetail extends AppCompatActivity {
             }
         });
 
-        //TODO
         checkIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,11 +127,33 @@ public class HabitDetail extends AppCompatActivity {
 
                     }
                     // Start the timer.
-                    Thread timerThread = new Thread(new HabitDoingTimer(overallSeconds, HabitDetail.this));
+                    timerThread = new Thread(new HabitDoingTimer(overallSeconds, HabitDetail.this));
                     timerThread.start();
+
+                    // give ui feedback.
+                    Toast.makeText(getApplicationContext(),"You checked in. Let's do this task!",Toast.LENGTH_SHORT).show();
 
                     // flag checkedIn.
                     m_checkedIn = true;
+                }
+            }
+        });
+
+        checkOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check out.
+                if(m_checkedIn){
+                    // no need to interrupt the timer thread because it will stop automatically.
+                    // give food and go to the activity.
+                    PetDataHelper petdb = new PetDataHelper(HabitDetail.this);
+                    petdb.changeFood(true,1);
+
+                    // give ui feedback.
+                    Toast.makeText(getApplicationContext(),"Task completed! You get 1 food.",Toast.LENGTH_SHORT).show();
+
+                    // flag checkedIn.
+                    m_checkedIn = false;
                 }
             }
         });
@@ -230,7 +255,8 @@ public class HabitDetail extends AppCompatActivity {
 
                     // Bump up the progress
                     progress+=interval;
-                }catch (Exception e){
+                }
+                catch (Exception e){
 
                 }
             }
