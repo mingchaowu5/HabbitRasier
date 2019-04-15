@@ -211,7 +211,7 @@ public class HabitDetail extends AppCompatActivity {
             // Set up notification stuff.
             // Set a tapping handler.
             // Create an explicit intent for an Activity in your app
-            Intent intent = new Intent(m_activity, HabitDetail.class);
+            Intent intent = new Intent(m_activity, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(m_activity, 0, intent, 0);
 
